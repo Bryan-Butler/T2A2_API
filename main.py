@@ -10,7 +10,7 @@ import sqlalchemy as sa
 bcrypt = Bcrypt()
 db = SQLAlchemy()
 ma = Marshmallow()
-jwt = JWTManager
+jwt = JWTManager()
 
 def init_app():
     # load environment variable
@@ -20,11 +20,11 @@ def init_app():
     # create flask app instance
     app = Flask(__name__)
 
-    # app config
+    # app configuration
     app.config.from_object("config.app_config")
     jwt.init_app(app)
 
-    # connect to DB
+    # connect to D
     db.init_app(app)
 
     # connect schemas
@@ -34,11 +34,12 @@ def init_app():
     from commands import db_commands
     app.register_blueprint(db_commands)
 
+  
     # connect blueprint controllers
-    from controllers import registered_controllers
+    #from controllers import all_controllers
 
-    for controller in registered_controllers:
-        app.register_blueprint(controller)
+    #for controller in registered_controllers:
+        #app.all_blueprint(controller)
 
     db_engine = sa.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     db_inspector = sa.inspect(db_engine)

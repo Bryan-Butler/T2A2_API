@@ -1,14 +1,14 @@
 from main import db
 from sqlalchemy import DateTime
 
-class user():
-    __tablename__ = 'User'
+class User():
+    __tablename__ = 'users'
 
-    UserID = db.Column(db.Integer, primary_key=True)
+    User_ID = db.Column(db.Integer, primary_key=True)
     Username = db.Column(db.String)
     Email = db.Column(db.String)
     Password = db.Column(db.String)
-    RegistrationDate = db.Column(DateTime)
+    Registration_Date = db.Column(DateTime)
 
     # Define one-to-many relationships
     user_library = db.relationship("UserLibrary", back_populates="user")

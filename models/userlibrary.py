@@ -2,12 +2,12 @@ from main import db
 from sqlalchemy import DateTime
 
 class UserLibrary():
-    __tablename__ = 'UserLibrary'
+    __tablename__ = 'user librarys'
 
-    UserLibraryID = db.Column(db.Integer, primary_key=True)
-    UserID = db.Column(db.Integer, db.ForeignKey('User.UserID'))
-    GameID = db.Column(db.Integer, db.ForeignKey('Game.GameID'))
-    PurchaseDate = db.Column(DateTime)
+    UserLibrary_ID = db.Column(db.Integer, primary_key=True)
+    User_ID = db.Column(db.Integer, db.ForeignKey('User.UserID'))
+    Game_ID = db.Column(db.Integer, db.ForeignKey('Game.GameID'))
+    Purchase_Date = db.Column(DateTime)
     Playtime = db.Column(db.Integer)
     Status = db.Column(db.String)
 

@@ -1,11 +1,11 @@
 from main import db
 
 class Developer(db.Model):
-    __tablename__ = 'Developer'
+    __tablename__ = 'developers'
 
-    DeveloperID = db.Column(db.Integer, primary_key=True)
+    Developer_ID = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String)
     Website = db.Column(db.String)
-    ContactInfo = db.Column(db.String)
+    Contact_Info = db.Column(db.String)
 
     games = db.relationship("Game", back_populates="developer")
