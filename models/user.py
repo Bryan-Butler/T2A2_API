@@ -4,7 +4,7 @@ from sqlalchemy import DateTime
 class User():
     __tablename__ = 'users'
 
-    User_ID = db.Column(db.Integer, primary_key=True)
+    User_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Username = db.Column(db.String)
     Email = db.Column(db.String)
     Password = db.Column(db.String)

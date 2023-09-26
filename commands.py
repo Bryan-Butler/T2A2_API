@@ -1,9 +1,18 @@
 from flask import Blueprint
 from datetime import datetime
+from random import randint
 import time
 
 from main import db, bcrypt
-from models import user, developer, game, genre, publisher, review, transaction, userlibrary
+from models.user import User
+from models.review import Review
+from models.transaction import Transactions
+from models.userlibrary import User_Library
+from models.game import Game
+from models.genre import Genre
+from models.developer import Developer
+from models.publisher import Publisher
+
 
 db_commands = Blueprint("db", __name__)
 
@@ -19,14 +28,34 @@ def drop_db():
 
 @db_commands.cli.command("seed")
 def seed_db():
+    try:
+        seed_users()
+        seed_games()
+        seed_genres()
+        seed_developers()
+        seed_publishers()
+        seed_reviews()
+        seed_transactions()
+        seed_user_libraries()
+        print("Database has been seeded")
+    except Exception as e:
+        print(f"Error seeding database: {str(e)}")
+
+
+@db_commands.cli.command("seed_users")
+def seed_users():
     # create User objects
-    user1 = user(
-        email = "akash1@jit.com.au",
-        password = bcrypt.generate_password_hash("123456").decode("utf-8")
+    user1 = User(
+        Username = "Bryan",
+        Email = "Bryan@fakeemail.com",
+        Password = bcrypt.generate_password_hash("password").decode("utf-8"),
+        Registration_Date = datetime.now()
     )
-    user2 = user(
-        email = "akash1@dillon.com.au",
-        password = bcrypt.generate_password_hash("123456").decode("utf-8")
+    user2 = User(
+        Username = "Fake",
+        Email = "fake@fakeemail.com",
+        Password = bcrypt.generate_password_hash("password").decode("utf-8"),
+        Registration_date = datetime.now()
     )
 
     # add all users object to db
@@ -35,66 +64,227 @@ def seed_db():
     ])
     # commit db for users
     db.session.commit()
+   
 
-    # create Task objects
-    time_1_day_later = int(time.time()) + (24 * 60 * 60)
-    task1 = Task(
-        name = "first task",
-        description = "Explaining students about ORM",
-        due_date = datetime.fromtimestamp(time_1_day_later),
-        completed_at = None,
-        state = "In Progress",
-        user_id = user1.id,
+
+@db_commands.cli.command("seed_games")
+def seed_games():
+    # Create Game objects
+    game1 = Game(
+        Genre_ID=1, 
+        Developer_ID=1, 
+        Publisher_ID=1, 
+        Title="World of Warcraft",
+        Release_Date=datetime(2004, 11, 23), 
+        Avg_User_Rating=4.5,  
+        Num_User_Rating=100  
     )
 
-    task2 = Task(
-        name = "second task",
-        description = "Explaining students about Blueprint",
-        due_date = datetime.fromtimestamp(time_1_day_later),
-        completed_at = datetime.now(),
-        state = "Completed",
-        user_id = user2.id,
+    game2 = Game(
+        Genre_ID=2,  
+        Developer_ID=2,  
+        Publisher_ID=2,  
+        Title="League of Legends",
+        Release_Date=datetime(2009, 10, 27),  
+        Avg_User_Rating=4.0,  
+        Num_User_Rating=50  
     )
 
-    time_1_day_ago = int(time.time()) - (24 * 60 * 60)
-    time_2_day_ago = int(time.time()) - (24 * 60 * 60 * 2)
-    task3 = Task(
-        name = "third task",
-        description = "Explaining students about Association",
-        due_date = datetime.fromtimestamp(time_1_day_ago),
-        completed_at = datetime.fromtimestamp(time_2_day_ago),
-        user_id = user1.id,
-        state = "Completed",
+    game3 = Game(
+        Genre_ID=3,
+        Developer_ID=3,
+        Publisher_ID=3,
+        Title="Counter-Strike go",
+        Release_Date=datetime(2012, 8, 21),
+        Avg_User_Rating=4.0,
+        Num_User_Rating=34
     )
 
-    # add tasks object to db
-    db.session.add_all([
-        task1, task2, task3,
-    ])
+    # Add all Game objects to the database session
+    db.session.add_all([game1, game2, game3])
 
-    # commit db for tasks
+    # Commit the games to the database
     db.session.commit()
 
-    # comments
-    comment1 = Comment(
-        message = "Teach Flask",
-        created_at = datetime.now(),
-        task_id = task1.id,
-        user_id = user2.id,
+
+
+@db_commands.cli.command("seed_genres")
+def seed_genres():
+    # Create Genre objects
+    genre1 = Genre(
+        Genre_Name="Massive Multiplayer Online Role Playing Game"
+    )
+    genre2 = Genre(
+        Genre_Name="Massive Online Battle Arena"
+    )
+    genre3 = Genre(
+        Genre_Name="First Person Shooter"
     )
 
-    comment2 = Comment(
-        message = "Teach Flask",
-        created_at = datetime.now(),
-        task_id = task1.id,
-        user_id = task1.user_id,
+    # Add all Genre objects to the database session
+    db.session.add_all([genre1, genre2, genre3])
+
+    # Commit the genres to the database
+    db.session.commit()
+
+
+
+@db_commands.cli.command("seed_developers")
+def seed_developers():
+    # Create Developer objects
+    developer1 = Developer(
+        Name="Activision Blizzard",
+        Website="https://www.blizzard.com",
+        Contact_Info="contact@blizzard.com"
+    )
+    developer2 = Developer(
+        Name="Riot Games",
+        Website="https://www.riot.com",
+        Contact_Info="contact@riot.com"
+    )
+    developer3 = Developer(
+        Name="Valve",
+        Website="https://www.valve.com",
+        Contact_Info="contact@valve.com"
     )
 
-    # add comments object to db
-    db.session.add_all([
-        comment1, comment2,
-    ])
+    # Add all Developer objects to the database session
+    db.session.add_all([developer1, developer2, developer3])
 
+    # Commit the changes to the database
+    db.session.commit()
+
+
+
+@db_commands.cli.command("seed_publishers")
+def seed_publishers():
+    # Create Publisher objects
+    publisher1 = Publisher(
+        Name="Blizzard",
+        Website="https://www.blizzard.com",
+        Contact_info="contact@blizzard.com"
+    )
+    publisher2 = Publisher(
+        Name="Riot Games",
+        Website="https://www.Riot.com",
+        Contact_info="contact@riot.com"
+    )
+    publisher3 = Publisher(
+        Name="Valve Corporation",
+        Website="https://www.valve.com",
+        Contact_info="contact@valve.com"
+    )
+
+    # Add all Publisher objects to the database session
+    db.session.add_all([publisher1, publisher2, publisher3])
+
+    # Commit the changes to the database
+    db.session.commit()
+
+
+
+@db_commands.cli.command("seed_reviews")
+def seed_reviews():
+    reviews = [
+        Review(
+            User_ID=1,  
+            Game_ID=1,  
+            Rating=randint(1, 5), 
+            Review_Description="Review goes here",
+            Review_Date=datetime.now(),
+        ),
+        Review(
+            User_ID=2,  
+            Game_ID=2,  
+            Rating=randint(1, 5),  
+            Review_Description="Type review here.",
+            Review_Date=datetime.now(),
+        ),
+        Review(
+            User_ID=3,
+            Game_ID=3,
+            Rating=randint(1, 5),
+            Review_description="Another review",
+            Review_Date=datetime.now(),
+        )
+    ]
+
+    # Add all Review objects to the database session
+    db.session.add_all(reviews)
+
+    # Commit the changes to the database
+    db.session.commit()
+
+
+
+@db_commands.cli.command("seed_transactions")
+def seed_transactions():
+    # Create Transactions objects
+    transactions = [
+        Transactions(
+            User_ID=1,  
+            Game_ID=1,  
+            Purchase_Date=datetime.now(),
+            Transaction_Amount=1999,  
+            Payment_Method="Credit Card",
+            Transaction_Status="Completed",
+        ),
+        Transactions(
+            User_ID=2,  
+            Game_ID=2,  
+            Purchase_Date=datetime.now(),
+            Transaction_Amount=2499,  
+            Payment_Method="PayPal",
+            Transaction_Status="Completed",
+        ),
+        Transactions(
+            User_ID=3,
+            Game_ID=3,
+            Purchase_Date=datetime.now(),
+            Transaction_Amount=1632,
+            Payment_Method="gift card",
+            Transaction_Status="Processing"
+        )
+    ]
+
+    # Add all Transactions objects to the database session
+    db.session.add_all(transactions)
+
+    # Commit the transactions to the database
+    db.session.commit()
+
+@db_commands.cli.command("seed_user_libraries")
+def seed_user_libraries():
+    # Create UserLibrary objects
+    user_libraries = [
+        User_Library(
+            User_ID=1,  
+            Game_ID=1, 
+            Purchase_Date=datetime.now(),
+            Play_Time=10, 
+            Status="Owned",
+        ),
+        User_Library(
+            User_ID=2,  
+            Game_ID=2,  
+            Purchase_Date=datetime.now(),
+            Play_Time=5,  
+            Status="Owned",
+        ),
+        User_Library(
+            User_ID=3,
+            Game_ID=3,
+            Purchase_Date=datetime.now(),
+            Play_Time=0,
+            Status="Not Owned"
+        )
+        # Add more user libraries as needed
+    ]
+
+    # Add all UserLibrary objects to the database session
+    db.session.add_all(user_libraries)
+
+    # Commit the changes to the database
     db.session.commit()
 
     # log if seed is succeeded
