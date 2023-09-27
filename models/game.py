@@ -5,9 +5,9 @@ class Game():
     __tablename__ = 'games'
 
     Game_ID = db.Column(db.Integer, primary_key=True)
-    Genre_ID = db.Column(db.Integer, db.ForeignKey('Genre.GenreID'))
-    Developer_ID = db.Column(db.Integer, db.ForeignKey('Developer.DeveloperID'))
-    Publisher_ID = db.Column(db.Integer, db.ForeignKey('Publisher.PublisherID'))
+    Genre_ID = db.Column(db.Integer, db.ForeignKey('Genre.Genre_ID'))
+    Developer_ID = db.Column(db.Integer, db.ForeignKey('Developer.Developer_ID'))
+    Publisher_ID = db.Column(db.Integer, db.ForeignKey('Publisher.Publisher_ID'))
     Title = db.Column(db.String)
     Release_Date = db.Column(DateTime)
     Avg_User_Rating = db.Column(db.Float)
@@ -17,7 +17,7 @@ class Game():
     genre =  db.relationship("Genre", back_populates="games")
     developer = db.relationship("Developer", back_populates="games")
     publisher = db.relationship("Publisher", back_populates="games")
-    user_library = db.relationship("UserLibrary", back_populates="games")
+    user_library = db.relationship("User_Library", back_populates="games")
     transactions = db.relationship("Transactions", back_populates="games")
     reviews = db.relationship("Reviews", back_populates="games")
 

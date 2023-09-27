@@ -5,8 +5,8 @@ class Transactions():
     __tablename__ = 'transactions'
 
     Transaction_ID = db.Column(db.Integer, primary_key=True)
-    User_ID = db.Column(db.Integer, db.ForeignKey('User.UserID'))
-    Game_ID = db.Column(db.Integer, db.ForeignKey('Game.GameID'))
+    User_ID = db.Column(db.Integer, db.ForeignKey('User.User_ID'))
+    Game_ID = db.Column(db.Integer, db.ForeignKey('Game.Game_ID'))
     Purchase_Date = db.Column(DateTime)
     Transaction_Amount = db.Column(db.Integer)
     Payment_Method = db.Column(db.String)
