@@ -9,6 +9,7 @@ class User():
     Email = db.Column(db.String)
     Password = db.Column(db.String)
     Registration_Date = db.Column(DateTime)
+    Is_Admin = db.Column(db.Boolean, default=False)
 
     # Define one-to-many relationships
     user_library = db.relationship("UserLibrary", back_populates="user")

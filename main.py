@@ -30,7 +30,7 @@ def init_app():
     # connect schemas
     ma.init_app(app)
 
-    # connect CLI commands -> blueprint
+    # connect CLI commands 
     from commands import db_commands
     app.register_blueprint(db_commands)
 

@@ -1,17 +1,11 @@
 from flask import Blueprint
 from datetime import datetime
 from random import randint
-import time
-
 from main import db, bcrypt
-from models.user import User
-from models.review import Review
-from models.transaction import Transactions
-from models.userlibrary import User_Library
-from models.game import Game
-from models.genre import Genre
-from models.developer import Developer
-from models.publisher import Publisher
+
+from models import (User, Review, Transactions, User_Library,
+                    Game, Genre, Developer, Publisher)
+
 
 
 db_commands = Blueprint("db", __name__)
@@ -26,6 +20,8 @@ def drop_db():
     db.drop_all()
     print("Tables are dropped")
 
+
+#seed data for ALL tables
 @db_commands.cli.command("seed")
 def seed_db():
     try:
@@ -42,6 +38,8 @@ def seed_db():
         print(f"Error seeding database: {str(e)}")
 
 
+
+#seed data for users table
 @db_commands.cli.command("seed_users")
 def seed_users():
     # create User objects
@@ -49,13 +47,15 @@ def seed_users():
         Username = "Bryan",
         Email = "Bryan@fakeemail.com",
         Password = bcrypt.generate_password_hash("password").decode("utf-8"),
-        Registration_Date = datetime.now()
+        Registration_Date = datetime.now(),
+        Is_Admin = True
     )
     user2 = User(
         Username = "Fake",
         Email = "fake@fakeemail.com",
         Password = bcrypt.generate_password_hash("password").decode("utf-8"),
-        Registration_date = datetime.now()
+        Registration_date = datetime.now(),
+        Is_Admin = False
     )
 
     # add all users object to db
@@ -67,6 +67,7 @@ def seed_users():
    
 
 
+#seed data for games table
 @db_commands.cli.command("seed_games")
 def seed_games():
     # Create Game objects
@@ -108,6 +109,7 @@ def seed_games():
 
 
 
+# seed data for genres table
 @db_commands.cli.command("seed_genres")
 def seed_genres():
     # Create Genre objects
@@ -129,6 +131,7 @@ def seed_genres():
 
 
 
+# seed data for developers table
 @db_commands.cli.command("seed_developers")
 def seed_developers():
     # Create Developer objects
@@ -156,6 +159,7 @@ def seed_developers():
 
 
 
+#seed data for publishers table
 @db_commands.cli.command("seed_publishers")
 def seed_publishers():
     # Create Publisher objects
@@ -183,6 +187,7 @@ def seed_publishers():
 
 
 
+# seed data for reviews table
 @db_commands.cli.command("seed_reviews")
 def seed_reviews():
     reviews = [
@@ -253,6 +258,9 @@ def seed_transactions():
     # Commit the transactions to the database
     db.session.commit()
 
+
+
+#seed data for User_librarys table
 @db_commands.cli.command("seed_user_libraries")
 def seed_user_libraries():
     # Create UserLibrary objects
