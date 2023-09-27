@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify
 from main import db
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from models import Game, Publisher, Genre
+from models import Game, Publisher, Genre, Developer
 from authorize_helpers import admin_required
 game = Blueprint("game", __name__)
 
@@ -70,7 +70,7 @@ def read_game(Game_ID):
 def filter_game_by_genre(Genre_ID):
     try:
         #query database to show games with a specific Genre_ID
-        games = Game.query.filter_by(Genre_ID=Genre_ID).all()
+        games = Genre.query.filter_by(Genre_ID=Genre_ID).all()
 
         #serialize the games to json
         game_list = []
@@ -98,7 +98,7 @@ def filter_game_by_genre(Genre_ID):
 def filter_game_by_dev(Developer_ID):
     try:
         #query database to show games with a specific Developer_ID
-        games = Game.query.filter_by(Developer_ID=Developer_ID).all()
+        games = Developer.query.filter_by(Developer_ID=Developer_ID).all()
 
         #serialize the games to json
         game_list = []
@@ -126,7 +126,7 @@ def filter_game_by_dev(Developer_ID):
 def filter_game_by_publisher(Publisher_ID):
     try:
         #query database to show games with a specific Developer_ID
-        games = Game.query.filter_by(Publisher_ID=Publisher_ID).all()
+        games = Publisher.query.filter_by(Publisher_ID=Publisher_ID).all()
 
         #serialize the games to json
         game_list = []
