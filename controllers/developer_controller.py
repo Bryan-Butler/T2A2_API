@@ -4,45 +4,54 @@ from main import db
 from marshmallow.exceptions import ValidationError
 
 
-from authorize_helpers import admin_required
+from custom_decorator import admin_required
 from models import Developer
 from schemas import DeveloperSchema
 
 
 
-developers = Blueprint("developers", __name__, url_prefix="/developers")
+developers = Blueprint("developers", __name__, url_prefix="/developer")
 
 #show all developers
 @developers.route("/", methods=["GET"])
 def get_all_developers():
-    # Query the database to retrieve all developers
-    all_developers = Developer.query.all()
+    try:
+        # Query the database to retrieve all developers
+        all_developers = Developer.query.all()
 
-    # Serialize the list of developers using DeveloperSchema
-    developer_schema = DeveloperSchema(many=True)
-    developers_data = developer_schema.dump(all_developers)
+        # Serialize the list of developers using DeveloperSchema
+        developer_schema = DeveloperSchema(many=True)
+        developers_data = developer_schema.dump(all_developers)
 
-    # Return the list of developers as JSON response
-    return jsonify(developers_data), 200
+        # Return the list of developers as JSON response
+        return jsonify(developers_data), 200
+    except Exception as e:
+        # Handle exceptions and return an error response if needed
+        return jsonify({"message": "An error occurred"}), 500
+
 
 #show developer by id number
 @developers.route("/<int:developer_id>", methods=["GET"])
 def get_developer_by_id(developer_id):
-    # Query the database to retrieve a developer by their ID
-    developer = Developer.query.get(developer_id)
+    try:
+        # Query the database to retrieve a developer by their ID
+        developer = Developer.query.get(developer_id)
 
-    if not developer:
-        return abort(404, description="Developer not found")
+        if not developer:
+            return abort(404, description="Developer not found")
 
-    # Serialize the developer using DeveloperSchema
-    developer_schema = DeveloperSchema()
-    developer_data = developer_schema.dump(developer)
+        # Serialize the developer using DeveloperSchema
+        developer_schema = DeveloperSchema()
+        developer_data = developer_schema.dump(developer)
 
-    # Return the developer data as a JSON response
-    return jsonify(developer_data), 200
+        # Return the developer data as a JSON response
+        return jsonify(developer_data), 200
+    except Exception as e:
+        # Handle exceptions and return an error response if needed
+        return jsonify({"message": "An error occurred"}), 500
 
 
-#updating a developer by id
+#route to update a developer by id, admin only
 @developers.route("/<int:developer_id>", methods=["PUT", "PATCH"])
 @jwt_required()  
 @admin_required()
@@ -85,33 +94,37 @@ def update_developer(developer_id):
 
 
 
-#create a new developer
+#create a new developer,admin only
 @developers.route("/create", methods=["POST"])
 @jwt_required()
 @admin_required
 def create_developer():
-    # Parse the incoming JSON data using DeveloperSchema
-    developer_schema = DeveloperSchema()
-    developer_data = request.json
-
     try:
+        # Parse the incoming JSON data using DeveloperSchema
+        developer_schema = DeveloperSchema()
+        developer_data = request.json
+
+        # Validate the data and load it into a Developer object
         developer = developer_schema.load(developer_data)
+
+        # Create a new developer object and add it to the database
+        new_developer = Developer(
+            name=developer.name,
+            website=developer.website,
+            contact_info=developer.contact_info
+        )
+
+        db.session.add(new_developer)
+        db.session.commit()
+
+        # Return the created developer data, including the assigned developer_id
+        created_developer_data = developer_schema.dump(new_developer)
+        return jsonify(created_developer_data), 201
+    
     except ValidationError as err:
+        #handl the validation errors and return an error response
         return jsonify(err.messages), 400
 
-    # Create a new developer object and add it to the database
-    new_developer = Developer(
-        name=developer.name,
-        website=developer.website,
-        contact_info=developer.contact_info
-    )
-
-    db.session.add(new_developer)
-    db.session.commit()
-
-    # Return the created developer data, including the assigned developer_id
-    created_developer_data = developer_schema.dump(new_developer)
-    return jsonify(created_developer_data), 201
 
 
 #deleteing a developer
@@ -119,15 +132,20 @@ def create_developer():
 @jwt_required()
 @admin_required  
 def delete_developer_by_id(developer_id):
-    # Query the database to retrieve the developer by their ID
-    developer = Developer.query.get(developer_id)
+    try:
+        # Query the database to retrieve the developer by their ID
+        developer = Developer.query.get(developer_id)
 
-    if not developer:
-        return abort(404, description="Developer not found")
+        if not developer:
+            return abort(404, description="Developer not found")
 
-    # Delete the developer from the database
-    db.session.delete(developer)
-    db.session.commit()
+        # Delete the developer from the database
+        db.session.delete(developer)
+        db.session.commit()
 
-    # Return a success message indicating that the developer has been deleted
-    return jsonify({"message": "Developer deleted successfully"}), 200
+        #return a success message indicating that the developer has been deleted
+        return jsonify({"message": "Developer deleted successfully"}), 200
+    
+    except Exception as e:
+        # Return a success message indicating that the developer has been deleted
+        return jsonify({"message": "Developer deleted successfully"}), 200

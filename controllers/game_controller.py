@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify
 from main import db
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 from models import Game, Publisher, Genre, Developer
-from authorize_helpers import admin_required
+from custom_decorator import admin_required
 
 
 game = Blueprint("game", __name__)

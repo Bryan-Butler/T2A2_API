@@ -4,22 +4,23 @@ from datetime import datetime
 
 from main import db, bcrypt
 from models.user import User
-from schemas import User_Schema
+from schemas.User_Schema import UserSchema
+from custom_decorator import admin_required
 
 
 
 
 # auth blueprint
-auths = Blueprint("auth", __name__, url_prefix="/authorize")
+home = Blueprint("auth", __name__, url_prefix="/home")
 
 
 #register and create user
-@auths.route("/register", methods=["POST"])
+@home.route("/register", methods=["POST"])
 def register_user():
     user_json = request.json
 
     # Deserialize and validate user data using User_Schema
-    errors = User_Schema().validate(user_json)
+    errors = UserSchema().validate(user_json)
 
     if errors:
         return jsonify(errors), 400
@@ -50,7 +51,7 @@ def register_user():
 
 
 #logging in a user
-@auths.route("/login", methods=["POST"])
+@home.route("/login", methods=["POST"])
 @jwt_required()
 def login_user():
     user_json = request.json
@@ -69,3 +70,31 @@ def login_user():
     return jsonify({"token": access_token}), 200
 
 
+
+#route to delete self
+@home.route('/user_delete/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({"message": f"User {user_id} deleted successfully"})
+    else:
+        return jsonify({"message": "User not found"}), 404
+
+
+# Route to delete a user by user_id, only accessible to administrators
+@home.route('/admin_delete/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+@admin_required()  
+def delete_user_as_admin(user_id):
+    user = User.query.get(user_id)
+    
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({"message": f"Admin deleted user {user_id} successfully"})
+    else:
+        return jsonify({"message": "User not found"}), 404
