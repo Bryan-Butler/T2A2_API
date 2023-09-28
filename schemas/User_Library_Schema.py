@@ -1,12 +1,12 @@
 from marshmallow import Schema, fields
 
 class UserLibrarySchema(Schema):
-    UserLibrary_ID = fields.Integer(dump_only=True)  
-    User_ID = fields.Integer()
-    Game_ID = fields.Integer()
-    Purchase_Date = fields.DateTime()
-    Playtime = fields.Integer()
-    Status = fields.String()
+    user_library_id = fields.Integer(dump_only=True)  
+    user_id = fields.Integer()
+    game_id = fields.Integer()
+    purchase_date = fields.DateTime()
+    play_time = fields.Integer()
+    status = fields.String()
 
     
     user = fields.Nested("UserSchema")

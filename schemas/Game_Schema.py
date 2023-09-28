@@ -1,14 +1,14 @@
 from marshmallow import Schema, fields
 
 class GameSchema(Schema):
-    Game_ID = fields.Integer(dump_only=True)
-    Genre_ID = fields.Integer()
-    Developer_ID = fields.Integer()
-    Publisher_ID = fields.Integer()
-    Title = fields.String(required=True)
-    Release_Date = fields.DateTime()
-    Avg_User_Rating = fields.Float()
-    Num_User_Rating = fields.Integer()
+    game_id = fields.Integer(dump_only=True)
+    genre_id = fields.Integer()
+    developer_id = fields.Integer()
+    publisher_id = fields.Integer()
+    title = fields.String(required=True)
+    release_date = fields.DateTime()
+    avg_user_rating = fields.Float()
+    num_user_rating = fields.Integer()
 
    
     genre = fields.Nested("GenreSchema")

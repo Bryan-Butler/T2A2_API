@@ -4,14 +4,14 @@ from sqlalchemy import DateTime
 class Game():
     __tablename__ = 'games'
 
-    Game_ID = db.Column(db.Integer, primary_key=True)
-    Genre_ID = db.Column(db.Integer, db.ForeignKey('Genre.Genre_ID'))
-    Developer_ID = db.Column(db.Integer, db.ForeignKey('Developer.Developer_ID'))
-    Publisher_ID = db.Column(db.Integer, db.ForeignKey('Publisher.Publisher_ID'))
-    Title = db.Column(db.String)
-    Release_Date = db.Column(DateTime)
-    Avg_User_Rating = db.Column(db.Float)
-    Num_User_Rating = db.Column(db.Integer)
+    game_id = db.Column(db.Integer, primary_key=True)
+    genre_id = db.Column(db.Integer, db.ForeignKey('Genre.genre_id'))
+    developer_id = db.Column(db.Integer, db.ForeignKey('Developer.developer_id'))
+    publisher_id = db.Column(db.Integer, db.ForeignKey('Publisher.publisher_id'))
+    title = db.Column(db.String)
+    release_date = db.Column(DateTime)
+    avg_user_rating = db.Column(db.Float)
+    num_user_rating = db.Column(db.Integer)
 
     # Define many-to-one relationships
     genre =  db.relationship("Genre", back_populates="games")

@@ -2,7 +2,7 @@ from main import ma
 from marshmallow import fields, Schema
 
 class DeveloperSchema(Schema):
-    Developer_ID = fields.Integer(dump_only=True) 
-    Name = fields.String(required=True)
-    Website = fields.String()
-    Contact_Info = fields.String()
+    developer_id = fields.Integer(dump_only=True) 
+    name = fields.String(required=True)
+    website = fields.String()
+    contact_info = fields.String()

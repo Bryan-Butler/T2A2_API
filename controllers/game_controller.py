@@ -4,6 +4,8 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from models import Game, Publisher, Genre, Developer
 from authorize_helpers import admin_required
+
+
 game = Blueprint("game", __name__)
 
 
@@ -18,14 +20,14 @@ def list_games():
         game_list = []
         for game in games:
             game_data = {
-                'Game_ID': game.Game_ID,
-                'Genre_ID': game.Genre_ID,
-                'Developer_ID': game.Developer_ID,
-                'Publisher_ID': game.Publisher_ID,
-                'Title': game.Title,
-                'Release_Date': game.Release_Date.strftime('%Y-%m-%d'),
-                'Avg_User_Rating': game.Avg_User_Rating,
-                'Num_User_Rating': game.Num_User_Rating,
+                'game_id': game.game_id,
+                'genre_id': game.genre_id,
+                'developer_id': game.developer_id,
+                'publisher_id': game.publisher_id,
+                'title': game.title,
+                'release_date': game.release_date.strftime('%Y-%m-%d'),
+                'avg_user_rating': game.avg_user_rating,
+                'num_user_rating': game.num_user_rating,
             }
             game_list.append(game_data)
 
@@ -37,11 +39,11 @@ def list_games():
 
 
 #route to list game by ID
-@game.route("/games/<int:Game_ID>", methods=["GET"])
-def read_game(Game_ID):
+@game.route("/games/<int:game_id>", methods=["GET"])
+def read_game(game_id):
     try:
-        # Query the database to get the game by Game_ID
-        game = Game.query.get(Game_ID)
+        # Query the database to get the game by game_id
+        game = Game.query.get(game_id)
 
         # Check if the game exists
         if game is None:
@@ -49,14 +51,14 @@ def read_game(Game_ID):
 
         # Serialize the game data to JSON
         game_data = {
-            'Game_ID': game.Game_ID,
-            'Genre_ID': game.Genre_ID,
-            'Developer_ID': game.Developer_ID,
-            'Publisher_ID': game.Publisher_ID,
-            'Title': game.Title,
-            'Release_Date': game.Release_Date.strftime('%Y-%m-%d'),
-            'Avg_User_Rating': game.Avg_User_Rating,
-            'Num_User_Rating': game.Num_User_Rating,
+            'game_id': game.game_id,
+            'genre_id': game.genre_id,
+            'developer_id': game.developer_id,
+            'publisher_id': game.publisher_id,
+            'title': game.title,
+            'release_date': game.release_date.strftime('%Y-%m-%d'),
+            'avg_user_rating': game.avg_user_rating,
+            'num_user_rating': game.num_user_rating,
         }
 
         return jsonify(game_data)
@@ -66,24 +68,24 @@ def read_game(Game_ID):
 
 
 #list game by genre ID
-@game.route("/games/genre/<int:Genre_ID>", methods=["GET"])
-def filter_game_by_genre(Genre_ID):
+@game.route("/games/genre/<int:genre_id>", methods=["GET"])
+def filter_game_by_genre(genre_id):
     try:
-        #query database to show games with a specific Genre_ID
-        games = Genre.query.filter_by(Genre_ID=Genre_ID).all()
+        #query database to show games with a specific genre_id
+        games = Genre.query.filter_by(genre_id=genre_id).all()
 
         #serialize the games to json
         game_list = []
         for game in games:
             game_data = {
-                'Game_ID': game.Game_ID,
-                'Genre_ID': game.Genre_ID,
-                'Developer_ID': game.Developer_ID,
-                'Publisher_ID': game.Publisher_ID,
-                'Title': game.Title,
-                'Release_Date': game.Release_Date.strftime('%Y-%m-%d'),
-                'Avg_User_Rating': game.Avg_User_Rating,
-                'Num_User_Rating': game.Num_User_Rating,
+                'game_id': game.game_id,
+                'genre_id': game.genre_id,
+                'developer_id': game.developer_id,
+                'publisher_id': game.publisher_id,
+                'title': game.title,
+                'release_date': game.release_date.strftime('%Y-%m-%d'),
+                'avg_user_rating': game.avg_user_rating,
+                'num_user_rating': game.num_user_rating,
             }
             game_list.append(game_data)
 
@@ -94,24 +96,24 @@ def filter_game_by_genre(Genre_ID):
     
 
 #list games by developer ID
-@game.route("/games/developer/<int:Developer_ID>", methods=["GET"])
-def filter_game_by_dev(Developer_ID):
+@game.route("/games/developer/<int:developer_id>", methods=["GET"])
+def filter_game_by_dev(developer_id):
     try:
-        #query database to show games with a specific Developer_ID
-        games = Developer.query.filter_by(Developer_ID=Developer_ID).all()
+        #query database to show games with a specific developer_id
+        games = Developer.query.filter_by(developer_id=developer_id).all()
 
         #serialize the games to json
         game_list = []
         for game in games:
             game_data = {
-                'Game_ID': game.Game_ID,
-                'Genre_ID': game.Genre_ID,
-                'Developer_ID': game.Developer_ID,
-                'Publisher_ID': game.Publisher_ID,
-                'Title': game.Title,
-                'Release_Date': game.Release_Date.strftime('%Y-%m-%d'),
-                'Avg_User_Rating': game.Avg_User_Rating,
-                'Num_User_Rating': game.Num_User_Rating,
+                'game_id': game.game_id,
+                'genre_id': game.genre_id,
+                'developer_id': game.developer_id,
+                'publisher_id': game.publisher_id,
+                'title': game.title,
+                'release_date': game.release_date.strftime('%Y-%m-%d'),
+                'avg_user_rating': game.avg_user_rating,
+                'num_user_rating': game.num_user_rating,
             }
             game_list.append(game_data)
 
@@ -122,24 +124,24 @@ def filter_game_by_dev(Developer_ID):
     
 
 #list games by developer ID
-@game.route("/games/publisher/<int:Publisher_ID>", methods=["GET"])
-def filter_game_by_publisher(Publisher_ID):
+@game.route("/games/publisher/<int:publisher_id>", methods=["GET"])
+def filter_game_by_publisher(publisher_id):
     try:
-        #query database to show games with a specific Developer_ID
-        games = Publisher.query.filter_by(Publisher_ID=Publisher_ID).all()
+        #query database to show games with a specific developer_id
+        games = Publisher.query.filter_by(publisher_id=publisher_id).all()
 
         #serialize the games to json
         game_list = []
         for game in games:
             game_data = {
-                'Game_ID': game.Game_ID,
-                'Genre_ID': game.Genre_ID,
-                'Developer_ID': game.Developer_ID,
-                'Publisher_ID': game.Publisher_ID,
-                'Title': game.Title,
-                'Release_Date': game.Release_Date.strftime('%Y-%m-%d'),
-                'Avg_User_Rating': game.Avg_User_Rating,
-                'Num_User_Rating': game.Num_User_Rating,
+                'game_id': game.game_id,
+                'genre_id': game.genre_id,
+                'developer_id': game.developer_id,
+                'publisher_id': game.publisher_id,
+                'title': game.title,
+                'release_date': game.release_date.strftime('%Y-%m-%d'),
+                'avg_user_rating': game.avg_user_rating,
+                'num_user_rating': game.num_user_rating,
             }
             game_list.append(game_data)
 
@@ -150,13 +152,13 @@ def filter_game_by_publisher(Publisher_ID):
     
 
 # Delete game by ID
-@game.route('/games/<int:Game_ID>', methods=['DELETE'])
+@game.route('/games/<int:game_id>', methods=['DELETE'])
 @jwt_required()
 @admin_required() 
-def delete_game(Game_ID):
+def delete_game(game_id):
     try:
-        # Query the database to get the game by Game_ID
-        game = Game.query.get(Game_ID)
+        # Query the database to get the game by game_id
+        game = Game.query.get(game_id)
 
         # Check if the game exists
         if game is None:

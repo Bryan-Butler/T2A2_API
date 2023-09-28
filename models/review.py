@@ -4,12 +4,12 @@ from sqlalchemy import DateTime, Text
 class Review():
     __tablename__ = 'reviews'
 
-    Review_ID = db.Column(db.Integer, primary_key=True)
-    User_ID = db.Column(db.Integer, db.ForeignKey('User.User_ID'))
-    Game_ID = db.Column(db.Integer, db.ForeignKey('Game.Game_ID'))
-    Rating = db.Column(db.Integer)
-    Review_Description = db.Column(Text)
-    Review_Date = db.Column(DateTime)
+    review_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.user_id'))
+    game_id = db.Column(db.Integer, db.ForeignKey('Game.game_id'))
+    rating = db.Column(db.Integer)
+    review_description = db.Column(Text)
+    revie_date = db.Column(DateTime)
 
     # Define many-to-one relationships
     user = db.relationship("User", back_populates="reviews")

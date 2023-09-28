@@ -101,15 +101,15 @@ def create_developer():
 
     # Create a new developer object and add it to the database
     new_developer = Developer(
-        Name=developer.Name,
-        Website=developer.Website,
-        Contact_Info=developer.Contact_Info
+        name=developer.name,
+        website=developer.website,
+        contact_info=developer.contact_info
     )
 
     db.session.add(new_developer)
     db.session.commit()
 
-    # Return the created developer data, including the assigned Developer_ID
+    # Return the created developer data, including the assigned developer_id
     created_developer_data = developer_schema.dump(new_developer)
     return jsonify(created_developer_data), 201
 

@@ -4,13 +4,13 @@ from sqlalchemy import DateTime
 class Transactions():
     __tablename__ = 'transactions'
 
-    Transaction_ID = db.Column(db.Integer, primary_key=True)
-    User_ID = db.Column(db.Integer, db.ForeignKey('User.User_ID'))
-    Game_ID = db.Column(db.Integer, db.ForeignKey('Game.Game_ID'))
-    Purchase_Date = db.Column(DateTime)
-    Transaction_Amount = db.Column(db.Integer)
-    Payment_Method = db.Column(db.String)
-    Transaction_Status = db.Column(db.String)
+    transaction_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.user_id'))
+    game_id = db.Column(db.Integer, db.ForeignKey('Game.game_id'))
+    purchase_date = db.Column(DateTime)
+    transaction_amount = db.Column(db.Integer)
+    payment_method = db.Column(db.String)
+    transaction_status = db.Column(db.String)
 
     # Define many-to-one relationships
     user = db.relationship("User", back_populates="transactions")

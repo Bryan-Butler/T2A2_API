@@ -1,15 +1,16 @@
 from main import db
+from datetime import datetime
 from sqlalchemy import DateTime
 
 class User():
     __tablename__ = 'users'
 
-    User_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Username = db.Column(db.String)
-    Email = db.Column(db.String)
-    Password = db.Column(db.String)
-    Registration_Date = db.Column(DateTime)
-    Is_Admin = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String)
+    email = db.Column(db.String)
+    password = db.Column(db.String)
+    registration_date = db.Column(DateTime, default=datetime.utcnow())
+    is_admin = db.Column(db.Boolean, default=False)
 
     # Define one-to-many relationships
     user_library = db.relationship("User_Library", back_populates="user")

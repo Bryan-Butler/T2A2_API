@@ -17,7 +17,7 @@ class BaseConfig(object):
         return secret_key or "very-secure-jwt"
 
 
-class DevelopementConfig(BaseConfig):
+class DevelopmentConfig(BaseConfig):
     DEBUG=True
 
 
@@ -32,7 +32,7 @@ class TestConfig(BaseConfig):
 env = os.environ.get("FLASK_ENV")
 
 if env == "development":
-    app_config = DevelopementConfig()
+    app_config = DevelopmentConfig()
 elif env == "testing":
     app_config = TestConfig()
 else:

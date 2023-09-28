@@ -44,18 +44,18 @@ def seed_db():
 def seed_users():
     # create User objects
     user1 = User(
-        Username = "Bryan",
-        Email = "Bryan@fakeemail.com",
-        Password = bcrypt.generate_password_hash("password").decode("utf-8"),
-        Registration_Date = datetime.now(),
-        Is_Admin = True
+        username = "Bryan",
+        email = "Bryan@fakeemail.com",
+        password = bcrypt.generate_password_hash("password").decode("utf-8"),
+        registration_date = datetime.now(),
+        is_admin = True
     )
     user2 = User(
-        Username = "Fake",
-        Email = "fake@fakeemail.com",
-        Password = bcrypt.generate_password_hash("password").decode("utf-8"),
-        Registration_date = datetime.now(),
-        Is_Admin = False
+        username = "Fake",
+        email = "fake@fakeemail.com",
+        password = bcrypt.generate_password_hash("password").decode("utf-8"),
+        registration_date = datetime.now(),
+        is_admin = False
     )
 
     # add all users object to db
@@ -72,33 +72,33 @@ def seed_users():
 def seed_games():
     # Create Game objects
     game1 = Game(
-        Genre_ID=1, 
-        Developer_ID=1, 
-        Publisher_ID=1, 
-        Title="World of Warcraft",
-        Release_Date=datetime(2004, 11, 23), 
-        Avg_User_Rating=4.5,  
-        Num_User_Rating=100  
+        genre_id=1, 
+        developer_id=1, 
+        publisher_id=1, 
+        title="World of Warcraft",
+        release_date=datetime(2004, 11, 23), 
+        avg_user_rating=4.5,  
+        num_user_rating=100  
     )
 
     game2 = Game(
-        Genre_ID=2,  
-        Developer_ID=2,  
-        Publisher_ID=2,  
-        Title="League of Legends",
-        Release_Date=datetime(2009, 10, 27),  
-        Avg_User_Rating=4.0,  
-        Num_User_Rating=50  
+        genre_id=2,  
+        developer_id=2,  
+        publisher_id=2,  
+        title="League of Legends",
+        release_date=datetime(2009, 10, 27),  
+        avg_user_rating=4.0,  
+        num_user_rating=50  
     )
 
     game3 = Game(
-        Genre_ID=3,
-        Developer_ID=3,
-        Publisher_ID=3,
-        Title="Counter-Strike go",
-        Release_Date=datetime(2012, 8, 21),
-        Avg_User_Rating=4.0,
-        Num_User_Rating=34
+        genre_id=3,
+        developer_id=3,
+        publisher_id=3,
+        title="Counter-Strike go",
+        release_date=datetime(2012, 8, 21),
+        avg_user_rating=4.0,
+        num_user_rating=34
     )
 
     # Add all Game objects to the database session
@@ -114,13 +114,13 @@ def seed_games():
 def seed_genres():
     # Create Genre objects
     genre1 = Genre(
-        Genre_Name="Massive Multiplayer Online Role Playing Game"
+        genre_name="Massive Multiplayer Online Role Playing Game"
     )
     genre2 = Genre(
-        Genre_Name="Massive Online Battle Arena"
+        genre_name="Massive Online Battle Arena"
     )
     genre3 = Genre(
-        Genre_Name="First Person Shooter"
+        genre_name="First Person Shooter"
     )
 
     # Add all Genre objects to the database session
@@ -136,19 +136,19 @@ def seed_genres():
 def seed_developers():
     # Create Developer objects
     developer1 = Developer(
-        Name="Activision Blizzard",
-        Website="https://www.blizzard.com",
-        Contact_Info="contact@blizzard.com"
+        name="Activision Blizzard",
+        website="https://www.blizzard.com",
+        contact_info="contact@blizzard.com"
     )
     developer2 = Developer(
-        Name="Riot Games",
-        Website="https://www.riot.com",
-        Contact_Info="contact@riot.com"
+        name="Riot Games",
+        website="https://www.riot.com",
+        contact_info="contact@riot.com"
     )
     developer3 = Developer(
-        Name="Valve",
-        Website="https://www.valve.com",
-        Contact_Info="contact@valve.com"
+        name="Valve",
+        website="https://www.valve.com",
+        contact_info="contact@valve.com"
     )
 
     # Add all Developer objects to the database session
@@ -164,19 +164,19 @@ def seed_developers():
 def seed_publishers():
     # Create Publisher objects
     publisher1 = Publisher(
-        Name="Blizzard",
-        Website="https://www.blizzard.com",
-        Contact_info="contact@blizzard.com"
+        name="Blizzard",
+        website="https://www.blizzard.com",
+        contact_info="contact@blizzard.com"
     )
     publisher2 = Publisher(
-        Name="Riot Games",
-        Website="https://www.Riot.com",
-        Contact_info="contact@riot.com"
+        name="Riot Games",
+        website="https://www.Riot.com",
+        contact_info="contact@riot.com"
     )
     publisher3 = Publisher(
-        Name="Valve Corporation",
-        Website="https://www.valve.com",
-        Contact_info="contact@valve.com"
+        name="Valve Corporation",
+        website="https://www.valve.com",
+        contact_info="contact@valve.com"
     )
 
     # Add all Publisher objects to the database session
@@ -192,25 +192,25 @@ def seed_publishers():
 def seed_reviews():
     reviews = [
         Review(
-            User_ID=1,  
-            Game_ID=1,  
-            Rating=randint(1, 5), 
-            Review_Description="Review goes here",
-            Review_Date=datetime.now(),
+            user_id=1,  
+            game_id=1,  
+            rating=randint(1, 5), 
+            review_description="Review goes here",
+            revie_date=datetime.now(),
         ),
         Review(
-            User_ID=2,  
-            Game_ID=2,  
-            Rating=randint(1, 5),  
-            Review_Description="Type review here.",
-            Review_Date=datetime.now(),
+            user_id=2,  
+            game_id=2,  
+            rating=randint(1, 5),  
+            review_description="Type review here.",
+            revie_date=datetime.now(),
         ),
         Review(
-            User_ID=3,
-            Game_ID=3,
-            Rating=randint(1, 5),
-            Review_description="Another review",
-            Review_Date=datetime.now(),
+            user_id=3,
+            game_id=3,
+            rating=randint(1, 5),
+            review_description="Another review",
+            revie_date=datetime.now(),
         )
     ]
 
@@ -227,28 +227,28 @@ def seed_transactions():
     # Create Transactions objects
     transactions = [
         Transactions(
-            User_ID=1,  
-            Game_ID=1,  
-            Purchase_Date=datetime.now(),
-            Transaction_Amount=1999,  
-            Payment_Method="Credit Card",
-            Transaction_Status="Completed",
+            user_id=1,  
+            game_id=1,  
+            purchase_date=datetime.now(),
+            transaction_amount=1999,  
+            payment_method="Credit Card",
+            transaction_status="Completed",
         ),
         Transactions(
-            User_ID=2,  
-            Game_ID=2,  
-            Purchase_Date=datetime.now(),
-            Transaction_Amount=2499,  
-            Payment_Method="PayPal",
-            Transaction_Status="Completed",
+            user_id=2,  
+            game_id=2,  
+            purchase_date=datetime.now(),
+            transaction_amount=2499,  
+            payment_method="PayPal",
+            transaction_status="Completed",
         ),
         Transactions(
-            User_ID=3,
-            Game_ID=3,
-            Purchase_Date=datetime.now(),
-            Transaction_Amount=1632,
-            Payment_Method="gift card",
-            Transaction_Status="Processing"
+            user_id=3,
+            game_id=3,
+            purchase_date=datetime.now(),
+            transaction_amount=1632,
+            payment_method="gift card",
+            transaction_status="Processing"
         )
     ]
 
@@ -266,25 +266,25 @@ def seed_user_libraries():
     # Create UserLibrary objects
     user_libraries = [
         User_Library(
-            User_ID=1,  
-            Game_ID=1, 
-            Purchase_Date=datetime.now(),
-            Play_Time=10, 
-            Status="Owned",
+            user_id=1,  
+            game_id=1, 
+            purchase_date=datetime.now(),
+            play_time=10, 
+            status="Owned",
         ),
         User_Library(
-            User_ID=2,  
-            Game_ID=2,  
-            Purchase_Date=datetime.now(),
-            Play_Time=5,  
-            Status="Owned",
+            user_id=2,  
+            game_id=2,  
+            purchase_date=datetime.now(),
+            play_time=5,  
+            status="Owned",
         ),
         User_Library(
-            User_ID=3,
-            Game_ID=3,
-            Purchase_Date=datetime.now(),
-            Play_Time=0,
-            Status="Not Owned"
+            user_id=3,
+            game_id=3,
+            purchase_date=datetime.now(),
+            play_time=0,
+            status="Not Owned"
         )
         # Add more user libraries as needed
     ]
