@@ -101,7 +101,7 @@ def get_transaction_by_id(transaction_id):
         return jsonify({"message": "An error occurred"}), 500
     
 
-
+#route for admin to update transactions
 @transaction.route("/<int:transaction_id>", methods=["PUT", "PATCH"])
 @jwt_required() 
 @admin_required() 
@@ -138,7 +138,7 @@ def update_transaction(transaction_id):
     
 
 
-
+#route for admin to delete a transaction if needed
 @transaction.route("/<int:transaction_id>", methods=["DELETE"])
 @jwt_required()  
 @admin_required() 
