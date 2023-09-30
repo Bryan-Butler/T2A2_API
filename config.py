@@ -1,39 +1,31 @@
 import os
 
 class BaseConfig(object):
-    @property
-    def SQLALCHEMY_DATABASE_URI(self):
-        db = os.environ.get("DATABASE_URI")
-
-        if db is None:
-            raise ValueError("Missing env DATABASE_URI")
-        
-        return db
-
-    @property
+    # Define the database URI for SQLAlchemy
+    SQLALCHEMY_DATABASE_URI = 'postgresql://bryan:PASS@localhost/game_store'
+    
     def JWT_SECRET_KEY(self):
         secret_key = os.environ.get("JWT_SECRET")
-        
-        return secret_key or "very-secure-jwt"
-
+        if secret_key is None:
+            raise ValueError("Missing env JWT_SECRET")
+        return secret_key
 
 class DevelopmentConfig(BaseConfig):
-    DEBUG=True
-
+    DEBUG = True
 
 class ProductionConfig(BaseConfig):
-    pass
-
+    DEBUG = False
 
 class TestConfig(BaseConfig):
-    pass
+    TESTING = True
 
-
+# Create the app_config based on the FLASK_ENV environment variable
 env = os.environ.get("FLASK_ENV")
-
 if env == "development":
     app_config = DevelopmentConfig()
+elif env == "production":
+    app_config = ProductionConfig()
 elif env == "testing":
     app_config = TestConfig()
 else:
-    app_config = ProductionConfig()
+    raise ValueError("Invalid FLASK_ENV value")

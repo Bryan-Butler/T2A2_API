@@ -1,6 +1,5 @@
 from flask import Blueprint
 from datetime import datetime
-from random import randint
 from main import db, bcrypt
 
 from models import (User, Review, Transactions, User_Library,
@@ -194,21 +193,21 @@ def seed_reviews():
         Review(
             user_id=1,  
             game_id=1,  
-            rating=randint(1, 5), 
+            rating=4, 
             review_description="Review goes here",
             revie_date=datetime.now(),
         ),
         Review(
             user_id=2,  
             game_id=2,  
-            rating=randint(1, 5),  
+            rating=3,  
             review_description="Type review here.",
             revie_date=datetime.now(),
         ),
         Review(
             user_id=3,
             game_id=3,
-            rating=randint(1, 5),
+            rating=5,
             review_description="Another review",
             revie_date=datetime.now(),
         )

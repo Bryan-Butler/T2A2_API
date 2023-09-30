@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required
 from main import db
 from marshmallow.exceptions import ValidationError
 
-from custom_decorator import admin_required
+from .custom_decorator import admin_required
 from models import Publisher
 from schemas import PublisherSchema
 
@@ -54,7 +54,7 @@ def get_publisher_by_id(publisher_id):
 #route to update info by publisher id, admin only
 @publisher.route("/<int:publisher_id>", methods=["PUT", "PATCH"])
 @jwt_required()
-@admin_required()
+@admin_required
 def update_publisher(publisher_id):
     # Query the database to retrieve the publisher by their ID
     publisher = Publisher.query.get(publisher_id)

@@ -21,7 +21,7 @@ def init_app():
     app = Flask(__name__)
 
     # app configuration
-    app.config.from_object("config.app_config")
+    app.config.from_object(app_config)
     jwt.init_app(app)
 
     # connect to D
@@ -35,11 +35,11 @@ def init_app():
     app.register_blueprint(db_commands)
 
   
-    # connect blueprint controllers
-    #from controllers import all_controllers
+    #connect blueprint controllers
+    from controllers import all_controllers
 
-    #for controller in registered_controllers:
-        #app.all_blueprint(controller)
+    for controller in all_controllers:
+        app.register_blueprint(controller)
 
     db_engine = sa.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     db_inspector = sa.inspect(db_engine)

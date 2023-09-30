@@ -4,7 +4,7 @@ from main import db
 from marshmallow.exceptions import ValidationError
 
 
-from custom_decorator import admin_required
+from .custom_decorator import admin_required
 from models import Developer
 from schemas import DeveloperSchema
 
@@ -54,7 +54,7 @@ def get_developer_by_id(developer_id):
 #route to update a developer by id, admin only
 @developers.route("/<int:developer_id>", methods=["PUT", "PATCH"])
 @jwt_required()  
-@admin_required()
+@admin_required
 def update_developer(developer_id):
     # Query the database to retrieve the developer by their ID
     developer = Developer.query.get(developer_id)

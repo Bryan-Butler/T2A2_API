@@ -1,15 +1,15 @@
 from main import db
-from sqlalchemy import DateTime, Text
+from datetime import datetime
 
 class Review():
     __tablename__ = 'reviews'
 
-    review_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('User.user_id'))
-    game_id = db.Column(db.Integer, db.ForeignKey('Game.game_id'))
-    rating = db.Column(db.Integer)
-    review_description = db.Column(Text)
-    revie_date = db.Column(DateTime)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(128), unique=True, nullable=False)
+    email = db.Column(db.String(128), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+    registration_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    is_admin = db.Column(db.Boolean, default=False)
 
     # Define many-to-one relationships
     user = db.relationship("User", back_populates="reviews")

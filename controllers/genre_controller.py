@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required
 
 
 from models import Genre
-from custom_decorator import admin_required
+from .custom_decorator import admin_required
 
 genre = Blueprint("genre", __name__, url_prefix='/genres')
 
@@ -28,7 +28,7 @@ def get_genre_by_id(genre_id):
 #route to update genre by id
 @genre.route("/update/<int:genre_id>", methods=["PUT", "PATCH"])
 @jwt_required()  
-@admin_required() 
+@admin_required
 def update_genre(genre_id):
     genre = Genre.query.get_or_404(genre_id)
     data = request.get_json()
@@ -42,8 +42,8 @@ def update_genre(genre_id):
 
 #route to create a new genre, admin only
 @genre.route("/create", methods=["POST"])
-@jwt_required()  
-@admin_required()  
+@jwt_required()
+@admin_required 
 def create_genre():
     data = request.get_json()
     
@@ -59,7 +59,7 @@ def create_genre():
 #route to delete by genre id, admin only
 @genre.route("/delete/<int:genre_id>", methods=["DELETE"])
 @jwt_required()
-@admin_required()
+@admin_required
 def delete_genre(genre_id):
     genre = Genre.query.get_or_404(genre_id)
     db.session.delete(genre)

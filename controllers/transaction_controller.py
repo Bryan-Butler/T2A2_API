@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity,current_user
 
 from models import Transactions
 from schemas import TransactionSchema
-from custom_decorator import admin_required
+from .custom_decorator import admin_required
 from main import db
 
 
@@ -104,7 +104,7 @@ def get_transaction_by_id(transaction_id):
 #route for admin to update transactions
 @transaction.route("/<int:transaction_id>", methods=["PUT", "PATCH"])
 @jwt_required() 
-@admin_required() 
+@admin_required
 def update_transaction(transaction_id):
     try:
         # Query the database to retrieve the transaction by its ID
@@ -141,7 +141,7 @@ def update_transaction(transaction_id):
 #route for admin to delete a transaction if needed
 @transaction.route("/<int:transaction_id>", methods=["DELETE"])
 @jwt_required()  
-@admin_required() 
+@admin_required
 def delete_transaction(transaction_id):
     try:
         # Query the database to retrieve the transaction by its ID
@@ -165,7 +165,7 @@ def delete_transaction(transaction_id):
 #route for admin to view all transactions
 @transaction.route("/all_transaction", methods=["GET"])
 @jwt_required()  
-@admin_required()
+@admin_required
 def get_all_transactions():
     try:
         # Query the database to retrieve all transactions

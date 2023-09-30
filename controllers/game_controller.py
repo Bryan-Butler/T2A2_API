@@ -3,14 +3,14 @@ from main import db
 from flask_jwt_extended import jwt_required
 
 from models import Game, Publisher, Genre, Developer
-from custom_decorator import admin_required
+from .custom_decorator import admin_required
 
 
-game = Blueprint("game", __name__)
+game = Blueprint("game", __name__, url_prefix="/games")
 
 
 #route to list all games
-@game.route("/games", methods=["GET"])
+@game.route("/", methods=["GET"])
 def list_games():
     try:
         # Query the database to get all games
@@ -154,7 +154,7 @@ def filter_game_by_publisher(publisher_id):
 # Delete game by ID
 @game.route('/games/<int:game_id>', methods=['DELETE'])
 @jwt_required()
-@admin_required() 
+@admin_required
 def delete_game(game_id):
     try:
         # Query the database to get the game by game_id

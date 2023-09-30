@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from models import Review, User, Game
 from schemas import ReviewSchema
-from custom_decorator import admin_required
+from .custom_decorator import admin_required
 from main import db
 
 
@@ -36,20 +36,25 @@ def get_reviews_by_game_id(game_id):
 #route to view all reviews from a user by user_id
 @review.route("/user/<int:user_id>", methods=["GET"])
 def get_reviews_by_user_id(user_id):
-    try:
-        # Query the database to retrieve all reviews with the specified user_id
-        reviews = Review.query.filter_by(user_id=user_id).all()
+    # Query the database to retrieve all reviews by the user's user_id
+    user_reviews = Review.query.filter_by(user_id=user_id).all()
 
-        # Serialize the list of reviews using ReviewSchema
-        review_schema = ReviewSchema(many=True)
-        review_data = review_schema.dump(reviews)
+    if not user_reviews:
+        return jsonify({"message": "No reviews found for this user"}), 404
 
-        # Return the list of reviews as JSON
-        return jsonify(review_data), 200
+    reviews_data = []
 
-    except Exception as e:
-        # Handle exceptions and return an error response if needed
-        return jsonify({"message": "An error occurred"}), 500
+    for review in user_reviews:
+        review_item = {
+            "review_id": review.review_id,
+            "game_id": review.game_id,
+            "rating": review.rating,
+            "review_description": review.review_description,
+            "review_date": review.review_date,
+        }
+        reviews_data.append(review_item)
+
+    return jsonify(reviews_data), 200
 
 
 
@@ -178,7 +183,7 @@ def create_review():
 #route for admin to delete a review
 @review.route("/admin_delete/<int:review_id>", methods=["DELETE"])
 @jwt_required()  
-@admin_required()  
+@admin_required
 def delete_review_as_admin(review_id):
     try:
         # Retrieve the review by its ID

@@ -8,8 +8,6 @@ class User_Library():
     user_id = db.Column(db.Integer, db.ForeignKey('User.user_id'))
     game_id = db.Column(db.Integer, db.ForeignKey('Game.game_id'))
     purchase_date = db.Column(DateTime)
-    play_time = db.Column(db.Integer)
-    status = db.Column(db.String)
 
     # Define many-to-one relationships
     user = db.relationship("User", back_populates="User_Library")
