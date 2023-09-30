@@ -1,9 +1,9 @@
 from main import db
 
-class Genre():
-    __tablename__ = 'genres'
+class Genre(db.Model):
+    __tablename__ = 'genre'
 
     genre_id = db.Column(db.Integer, primary_key=True)
     genre_name = db.Column(db.String)
 
-    games = db.relationship("Game", back_populates="genre")
+    games = db.relationship("game", back_populates="genre")

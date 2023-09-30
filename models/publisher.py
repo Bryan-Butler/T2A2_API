@@ -1,7 +1,7 @@
 from main import db
 
-class Publisher():
-    __tablename__ = 'publishers'
+class Publisher(db.Model):
+    __tablename__ = 'publisher'
 
     publisher_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)

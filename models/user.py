@@ -5,7 +5,7 @@ from sqlalchemy import DateTime
 
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128), unique=True, nullable=False)
@@ -17,4 +17,4 @@ class User(db.Model):
     # Define one-to-many relationships
     user_library = db.relationship("User_Library", back_populates="user")
     transactions = db.relationship("Transactions", back_populates="user")
-    reviews = db.relationship("Reviews", back_populates="user")
+    reviews = db.relationship("Review", back_populates="user")
