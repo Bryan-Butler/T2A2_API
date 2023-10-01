@@ -6,4 +6,4 @@ class Genre(db.Model):
     genre_id = db.Column(db.Integer, primary_key=True)
     genre_name = db.Column(db.String)
 
-    games = db.relationship("game", back_populates="genre")
+    games = db.relationship("Game", back_populates="genre")

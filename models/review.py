@@ -4,7 +4,7 @@ from sqlalchemy import DateTime, Text
 class Review(db.Model):
     __tablename__ = 'review'
 
-    Review_ID = db.Column(db.Integer, primary_key=True)
+    Review_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     game_id = db.Column(db.Integer, db.ForeignKey('game.game_id'))
     rating = db.Column(db.Integer)

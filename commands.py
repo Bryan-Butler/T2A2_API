@@ -40,6 +40,9 @@ def seed_genres():
     # Commit the genres to the database
     db.session.commit()
 
+    # log if seed is succeeded
+    print("genre has been seeded")
+
 
 # seed data for developers table
 @db_commands.cli.command("seed_developers")
@@ -67,6 +70,9 @@ def seed_developers():
     # Commit the changes to the database
     db.session.commit()
 
+    # log if seed is succeeded
+    print("developers has been seeded")
+
 
 # seed data for publishers table
 @db_commands.cli.command("seed_publishers")
@@ -93,6 +99,9 @@ def seed_publishers():
 
     # Commit the changes to the database
     db.session.commit()
+
+    # log if seed is succeeded
+    print("publisher has been seeded")
 
 
 # seed data for games table
@@ -135,6 +144,46 @@ def seed_games():
     # Commit the games to the database
     db.session.commit()
 
+    # log if seed is succeeded
+    print("games has been seeded")
+
+
+# seed data for users table
+@db_commands.cli.command("seed_users")
+def seed_users():
+    # create User objects
+    user1 = User(
+        username="Bryan",
+        email="Bryan@fakeemail.com",
+        password=bcrypt.generate_password_hash("password").decode("utf-8"),
+        registration_date=datetime.now(),
+        is_admin=True
+    )
+    user2 = User(
+        username="Fake",
+        email="fake@fakeemail.com",
+        password=bcrypt.generate_password_hash("password").decode("utf-8"),
+        registration_date=datetime.now(),
+        is_admin=False
+    )
+    user3 = User(
+        username="Fake2",
+        email="fake2@fake2email.com",
+        password=bcrypt.generate_password_hash("password").decode("utf-8"),
+        registration_date=datetime.now(),
+        is_admin=False
+
+    )
+    # add all users object to db
+    db.session.add_all([
+        user1, user2, user3
+    ])
+    # commit db for users
+    db.session.commit()
+    
+    # log if seed is succeeded
+    print("user's has been seeded")
+
 
 # seed data for User_librarys table
 @db_commands.cli.command("seed_user_libraries")
@@ -145,24 +194,17 @@ def seed_user_libraries():
             user_id=1,  
             game_id=1, 
             purchase_date=datetime.now(),
-            play_time=10, 
-            status="Owned",
         ),
         User_Library(
             user_id=2,  
             game_id=2,  
             purchase_date=datetime.now(),
-            play_time=5,  
-            status="Owned",
         ),
         User_Library(
             user_id=3,
             game_id=3,
             purchase_date=datetime.now(),
-            play_time=0,
-            status="Not Owned"
         )
-        # Add more user libraries as needed
     ]
 
     # Add all UserLibrary objects to the database session
@@ -172,7 +214,7 @@ def seed_user_libraries():
     db.session.commit()
 
     # log if seed is succeeded
-    print("Database has been seeded")
+    print("user libraries has been seeded")
 
 
 # seed data for reviews table
@@ -207,6 +249,9 @@ def seed_reviews():
 
     # Commit the changes to the database
     db.session.commit()
+
+    # log if seed is succeeded
+    print("reviews has been seeded")
 
 
 # seed data for transactions table
@@ -247,47 +292,24 @@ def seed_transactions():
     db.session.commit()
 
     # log if seed is succeeded
-    print("Database has been seeded")
+    print("transactions has been seeded")
 
 
-# seed data for users table
-@db_commands.cli.command("seed_users")
-def seed_users():
-    # create User objects
-    user1 = User(
-        username="Bryan",
-        email="Bryan@fakeemail.com",
-        password=bcrypt.generate_password_hash("password").decode("utf-8"),
-        registration_date=datetime.now(),
-        is_admin=True
-    )
-    user2 = User(
-        username="Fake",
-        email="fake@fakeemail.com",
-        password=bcrypt.generate_password_hash("password").decode("utf-8"),
-        registration_date=datetime.now(),
-        is_admin=False
-    )
 
-    # add all users object to db
-    db.session.add_all([
-        user1, user2,
-    ])
-    # commit db for users
-    db.session.commit()
 
 #seed data for ALL tables
-@db_commands.cli.command("seed")
+@db_commands.cli.command("seed_all")
 def seed_db():
     try:
-        seed_users()
         seed_genres()
         seed_developers()
         seed_publishers()
         seed_games()
+        seed_users()
+        seed_user_libraries()
         seed_reviews()
         seed_transactions()
-        seed_user_libraries()
+        
         print("Database has been seeded")
     except Exception as e:
         print(f"Error seeding database: {str(e)}")

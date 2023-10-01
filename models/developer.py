@@ -8,4 +8,4 @@ class Developer(db.Model):
     website = db.Column(db.String)
     contact_info = db.Column(db.String)
 
-    games = db.relationship("game", back_populates="developer")
+    games = db.relationship("Game", back_populates="developer")
